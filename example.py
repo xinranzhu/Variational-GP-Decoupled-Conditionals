@@ -1,10 +1,10 @@
 import argparse
 import random
 import torch
-from models.utils import load_data_1d, load_data, str2bool
-from models.svgp import SVGP
-from models.dcsvgp import DCSVGP
-from models.train_eval import train_gp, eval_gp
+from src.utils import load_data_1d, load_data, str2bool
+from src.svgp import SVGP
+from src.dcsvgp import DCSVGP
+from src.train_eval import train_gp, eval_gp
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -20,9 +20,6 @@ def parse_args():
     parser.add_argument('--train_batch_size', type=int, default=1024, help='size of training minibatch')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='learning rate')
     return parser.parse_args()
-
-
-
 
 def main(args):
     model_name = args.model_name
