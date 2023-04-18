@@ -79,5 +79,22 @@ def main(args):
 if __name__ == "__main__":
     main(parse_args())
 
-# python example.py --model DCSVGP --mll_type ELB --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 --beta2 0.001
+
+# DCSVGP on 1D
+# python example.py --model DCSVGP --mll_type ELBO --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 --beta2 0.001
+# SVGP on 1D
+# python example.py --model SVGP --mll_type ELBO --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 
+# DCPPGPR on 1D
+# python example.py --model DCSVGP --mll_type PLL --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 --beta2 0.001
+# PPGPR on 1D
+# python example.py --model SVGP --mll_type PLL --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 
+
+# DCSVGP on pol
+# python example.py --model DCSVGP --mll_type ELBO --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 --beta2 0.001
+# SVGP on pol
+# python example.py --model SVGP --mll_type ELBO --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 
+# DCPPGPR on pol
 # python example.py --model DCSVGP --mll_type PLL --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 --beta2 0.001
+# PPGPR on pol
+# python example.py --model SVGP --mll_type PLL --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 
+

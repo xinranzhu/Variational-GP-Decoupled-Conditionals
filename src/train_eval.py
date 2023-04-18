@@ -17,7 +17,6 @@ def train_gp(
     device="cpu", 
     beta1=1.0, beta2=0.001,
     ):
-
     train_dataset = TensorDataset(train_x, train_y)
     train_loader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True)
 
@@ -60,8 +59,6 @@ def train_gp(
                 print(f"\n\nEpoch {i}, loss: {loss.item():.3f}, ls: {model.covar_module.lengthscale.mean().item():.2f}, ls_mean: {model.variational_strategy.covar_module_mean.lengthscale.mean().item():.2f}, nll: {nll:.3f}, rmse: {rmse:.3e}")
             else:
                 print(f"\n\nEpoch {i}, loss: {loss.item():.3f}, ls: {model.covar_module.lengthscale.mean().item():.2f}, nll: {nll:.3f}, rmse: {rmse:.3e}")
-
-
             sys.stdout.flush()
 
     return model
