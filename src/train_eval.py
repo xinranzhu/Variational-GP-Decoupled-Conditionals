@@ -15,7 +15,7 @@ def train_gp(
     model_name="DCSVGP",
     mll_type="ELBO",
     device="cpu", 
-    beta1=1.0, beta2=0.001,
+    beta1=1.0, beta2=0,
     ):
     train_dataset = TensorDataset(train_x, train_y)
     train_loader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True)
@@ -56,9 +56,9 @@ def train_gp(
         
         if i % 100 == 0:
             if model_name.startswith("DC"):
-                print(f"\n\nEpoch {i}, loss: {loss.item():.3f}, ls: {model.covar_module.lengthscale.mean().item():.2f}, ls_mean: {model.variational_strategy.covar_module_mean.lengthscale.mean().item():.2f}, nll: {nll:.3f}, rmse: {rmse:.3e}")
+                print(f"\n\nEpoch {i}, loss: {loss.item():.3f}, ls_covar: {model.covar_module.lengthscale.mean().item():.2f}, ls_mean: {model.variational_strategy.covar_module_mean.lengthscale.mean().item():.2f}, training nll: {nll:.3f}, training rmse: {rmse:.3e}")
             else:
-                print(f"\n\nEpoch {i}, loss: {loss.item():.3f}, ls: {model.covar_module.lengthscale.mean().item():.2f}, nll: {nll:.3f}, rmse: {rmse:.3e}")
+                print(f"\n\nEpoch {i}, loss: {loss.item():.3f}, ls: {model.covar_module.lengthscale.mean().item():.2f}, training nll: {nll:.3f}, training rmse: {rmse:.3e}")
             sys.stdout.flush()
 
     return model

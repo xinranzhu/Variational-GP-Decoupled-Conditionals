@@ -9,7 +9,7 @@ from src.train_eval import train_gp, eval_gp
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_name', type=str, default="DCSVGP", help='type of model, choice of SVGP, DCSVGP')
-    parser.add_argument('--beta2', type=float, default=0.001, help='value of beta2 for DCSVGP and DCPPGPR')
+    parser.add_argument('--beta2', type=float, default=0, help='value of beta2 for DCSVGP and DCPPGPR')
     parser.add_argument('--mll_type', type=str, default="ELBO", help='type of mll, choices of ELBO or PLL')
     parser.add_argument('--kernel_type', type=str, default="se", help='type of kernels, choice of se, matern1/2, matern3/2, and matern5/2')
     parser.add_argument('--ARD', type=str, default='false', help='name of dataset, choice of 1D and pol, choice of true of false')
@@ -52,7 +52,7 @@ def main(args):
         inducing_points=inducing_points_init, 
         ard_num_dims=ard_num_dims,
         kernel_type=kernel_type)
-
+    
     model = train_gp(
         model, 
         train_x, train_y, 
@@ -78,20 +78,20 @@ if __name__ == "__main__":
 
 
 # DCSVGP on 1D
-# python example.py --model DCSVGP --mll_type ELBO --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 --beta2 0.001
+# python example.py --model DCSVGP --mll_type ELBO --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10
 # SVGP on 1D
 # python example.py --model SVGP --mll_type ELBO --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 
 # DCPPGPR on 1D
-# python example.py --model DCSVGP --mll_type PLL --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 --beta2 0.001
+# python example.py --model DCSVGP --mll_type PLL --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10
 # PPGPR on 1D
 # python example.py --model SVGP --mll_type PLL --dataset 1D --learning_rate 0.01 --num_epochs 1000 --num_inducing 10 
 
 # DCSVGP on pol
-# python example.py --model DCSVGP --mll_type ELBO --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 --beta2 0.001
+# python example.py --model DCSVGP --mll_type ELBO --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500
 # SVGP on pol
 # python example.py --model SVGP --mll_type ELBO --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 
 # DCPPGPR on pol
-# python example.py --model DCSVGP --mll_type PLL --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 --beta2 0.001
+# python example.py --model DCSVGP --mll_type PLL --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500
 # PPGPR on pol
 # python example.py --model SVGP --mll_type PLL --dataset pol --learning_rate 0.005 --num_epochs 300 --num_inducing 500 
 

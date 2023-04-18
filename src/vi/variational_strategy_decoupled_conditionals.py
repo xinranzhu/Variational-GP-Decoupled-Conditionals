@@ -136,17 +136,20 @@ class VariationalStrategyDecoupledConditionals(_VariationalStrategy):
         res = logdet_term + (trace_term + quad_term - L_s.shape[0])/2
 
         # add the correction term E_q(fm)[KL(psi(f|fm) || p(f|fm))]
-        delta_Lq_1 = L_mean.inv_matmul(induc_data_covar_mean).transpose(-1, -2)
-        delta_Lq_2 = L.inv_matmul(induc_data_covar).transpose(-1, -2)
-        delta_Lq_3 = L.inv_matmul(L_mean.evaluate())
-        delta_Lq = delta_Lq_1 - delta_Lq_2 @ delta_Lq_3
-        L_schur_delta_Lq = L_schur.inv_matmul(delta_Lq)
-        trace_term = (L_schur_delta_Lq @ L_s).square().sum()
-        quad_term = torch.norm(L_schur_delta_Lq @ m).square()
-        res2 = trace_term/2 + quad_term/2
         beta1 = kwargs["beta1"]
         beta2 = kwargs["beta2"]
-        return beta1*res + beta2*res2
+        if beta2 == 0:
+            return beta1*res
+        else:
+            delta_Lq_1 = L_mean.inv_matmul(induc_data_covar_mean).transpose(-1, -2)
+            delta_Lq_2 = L.inv_matmul(induc_data_covar).transpose(-1, -2)
+            delta_Lq_3 = L.inv_matmul(L_mean.evaluate())
+            delta_Lq = delta_Lq_1 - delta_Lq_2 @ delta_Lq_3
+            L_schur_delta_Lq = L_schur.inv_matmul(delta_Lq)
+            trace_term = (L_schur_delta_Lq @ L_s).square().sum()
+            quad_term = torch.norm(L_schur_delta_Lq @ m).square()
+            res2 = trace_term/2 + quad_term/2
+            return beta1*res + beta2*res2
 
 
     def forward(self, x, inducing_points, inducing_values, variational_inducing_covar=None, **kwargs):
